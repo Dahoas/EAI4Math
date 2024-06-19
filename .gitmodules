@@ -1,0 +1,3 @@
+[submodule "src/tools/repl"]
+	path = src/tools/repl
+	url = https://github.com/leanprover-community/repl
