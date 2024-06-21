@@ -35,3 +35,13 @@ echo "Building Lean 4's interface REPL..."
     popd
     echo "Lean 4's interface REPL built successfully!"
 ) || exit 1
+echo "Building Lean 4 MiniF2F"
+(
+    # Build Lean 4's interface REPL
+    pushd ./data/miniF2F-lean4/
+    lake exe cache get
+    lake build
+    popd
+    echo "MiniF2F built successfully!"
+) || exit 1
+
