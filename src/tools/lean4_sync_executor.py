@@ -133,7 +133,8 @@ class Lean4SyncExecutor:
         assert os.path.exists(path_to_repl_exec), f"Lean4 repl executable does not exist at {path_to_repl_exec}, you may need to build it"
         self.process_interface = ProcessInterface(
             command=f"lake env {path_to_repl_exec}",
-            cwd=self.project_root,
+            #cwd=self.project_root,
+            cwd=".",
             logger=self.logger,
             log_level=logging.INFO,
             reboot_every_n_commands=1)
@@ -374,7 +375,6 @@ class Lean4SyncExecutor:
                         has_unfocussed_goal += 1
                     else:
                         has_other_error += 1
-            import pdb; pdb.set_trace()
             return has_cnt == 1 and has_unfocussed_goal == 1 and has_other_error == 0
         finally:
             if os.path.exists(temp_file_full_path):
