@@ -133,7 +133,7 @@ if __name__ == "__main__":
     # file_path = './src/data/test/Mathlib/.lake/packages/mathlib/Mathlib/Data/Nat/Bits.lean'
     file_path = os.path.abspath(file_path)
     abs_repl_path = os.path.abspath(repl_path)
-    interface = ProcessInterface(f"lake env {abs_repl_path}", lean4_proj_path, log_level=logging.DEBUG, reboot_every_n_commands=1)
+    interface = ProcessInterface(f"lake env {abs_repl_path}", cwd=".", log_level=logging.DEBUG, reboot_every_n_commands=1)
     try:
         interface.send_command({"path": file_path, "allTactics": True})
         response = interface.read_response(1000)
