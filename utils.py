@@ -1,6 +1,15 @@
 import json
 from collections import defaultdict
 
+from datasets import load_dataset
+
+
+def dump_jsonl(data, filename):
+    with open(filename, "w") as f:
+        for sample in data:
+            json.dump(sample, f)
+            f.write("\n")
+
 
 def load_jsonl(filename):
     data = []
@@ -14,3 +23,16 @@ def load_jsonl(filename):
                 raise(e)
             data.append(response)
     return data
+
+
+def load_data(input_path, split):
+    if ".jsonl" in input_path:
+        return load_jsonl(input_path)
+    else:
+        return list(load_dataset(input_path)[split])
+    
+
+def find_smaller_divisor(dividend, divisor):
+    while dividend % divisor != 0:
+        divisor -= 1
+    return divisor
