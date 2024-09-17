@@ -2,6 +2,9 @@ from datasets import load_dataset
 import requests
 from typing import List
 import json
+from tqdm import tqdm
+
+from utils import dump_jsonl, load_jsonl
 
 
 def query_lean_server(lean_codes: List[str]):
@@ -23,10 +26,29 @@ def test_lean_server():
 #test_lean_server()
 
 dataset = load_dataset("cat-searcher/minif2f-lean4")
+print(dataset["test"][2])
 
 def test_minif2f_lean4():
-    sample = dataset["test"][0]
-    results = query_lean_server([sample["header"]+"\n"+sample["formal_statement"]])
+    sample = dataset["test"][2]
+    results = query_lean_server(["import Mathlib\n"+sample["formal_statement"]])
     print(results)
     
-test_minif2f_lean4()
+#test_minif2f_lean4()
+
+'''runs = []
+for sample in tqdm(list(dataset["test"])):
+    results = query_lean_server(["import Mathlib\n"+sample["formal_statement"]])
+    sample["lean_results"] = results
+    runs.append(sample)
+    
+dump_jsonl(runs, "minif2f_test_lean_results.jsonl")
+    '''
+    
+runs = load_jsonl("minif2f_test_lean_results.jsonl")
+cnt = 0
+for run in runs:
+    print(run)
+    if run["lean_results"][0]["pass"]:
+        cnt += 1
+print(len(runs))
+print(cnt)
