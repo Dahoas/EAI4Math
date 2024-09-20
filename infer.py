@@ -61,7 +61,7 @@ if __name__ == "__main__":
     parser.add_argument("--lower", default=0, type=int, help="Start index of samples in dataset.")
     parser.add_argument("--upper", default=1_000_000_000, type=int, help="End index of samples in dataset.")
 
-    parser.add_argument("--output_key_name", type=str, default="extracted_lemmas")
+    parser.add_argument("--output_key_name", type=str, default="response")
     parser.add_argument("--K", default=1, type=int, help="Number of samples per problem.")
 
     parser.add_argument("--model_name", default="Qwen/Qwen2-Math-72B-Instruct")
