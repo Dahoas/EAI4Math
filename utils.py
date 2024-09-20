@@ -36,3 +36,12 @@ def find_smaller_divisor(dividend, divisor):
     while dividend % divisor != 0:
         divisor -= 1
     return divisor
+
+
+######## Decorators ########
+
+def register_decorater(dict):
+    def decorator(cls):
+        dict[cls.name] = cls
+        return cls
+    return decorator

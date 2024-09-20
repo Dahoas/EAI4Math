@@ -10,7 +10,6 @@ def run(input_path,
     client = OpenAI()
     data = load_jsonl(input_path)
     for sample in tqdm(data):
-        print(sample[input_key])
         result = client.embeddings.create(
             input=sample[input_key], model="text-embedding-3-large"
         ).data
@@ -18,7 +17,7 @@ def run(input_path,
         if isinstance(sample[input_key], list):
             sample["embeddings"] = embeddings
         else:
-            sample["embedding"] = embeddings
+            sample["embedding"] = embeddings[0]
     embeddings_path = input_path.split(".jsonl")[0]
     embeddings_path = f"{embeddings_path}_embeddings.jsonl"
     dump_jsonl(data, embeddings_path)

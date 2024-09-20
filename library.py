@@ -29,8 +29,11 @@ def compute_batched_similarity(sources: torch.tensor,
     cnt = 0
     for source_batch in tqdm(batched_sources):
         for target_batch in batched_targets:
-            sims = source_batch @ target_batch.T
+            if use_gpu:
+                source_batch = source_batch.cuda()
+                target_batch = target_batch.cuda()
+            sims = (source_batch @ target_batch.T).cpu()
             for i, sample_sim in enumerate(sims):
-                sims_dict[cnt+i] += sample_sim
+                sims_dict[cnt+i] += list(sample_sim)
         cnt += len(source_batch)
     return sims_dict
